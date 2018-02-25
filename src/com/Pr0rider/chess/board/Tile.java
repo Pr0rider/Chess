@@ -2,6 +2,7 @@ package com.Pr0rider.chess.board;
 
 import com.Pr0rider.chess.pieces.Piece;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +19,7 @@ public abstract class Tile {
         for (int i = 0; i < 64; i++){
             emptyTileMap.put(i, new EmptyTile(i);
         }
-
-        return emptyTileMap;
+        return Collections.unmodifiableMap(emptyTileMap);
     }
 
     public static Tile createTile(final int tileCoordinate, final Piece piece){
