@@ -4,7 +4,7 @@ import com.Pr0rider.chess.Alliance;
 import com.Pr0rider.chess.board.Board;
 import com.Pr0rider.chess.board.Move;
 
-import java.util.List;
+import java.util.Collection;
 
 public class Piece {
 
@@ -16,7 +16,7 @@ public class Piece {
         this.pieceAlliance = pieceAlliance;
     }
 
-    public abstract List<Move> calkulateLegalMoves (final Board board);
+    public abstract Collection<Move> calkulateLegalMoves (final Board board);
 
     public Alliance getPieceAlliance() {
         return pieceAlliance;
