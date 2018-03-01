@@ -5,6 +5,7 @@ import com.Pr0rider.chess.board.Board;
 import com.Pr0rider.chess.board.BoardUtils;
 import com.Pr0rider.chess.board.Move;
 import com.Pr0rider.chess.board.Move.MajorMove;
+import com.Pr0rider.chess.board.Move.AtackMove;
 import com.Pr0rider.chess.board.Tile;
 
 import java.util.ArrayList;
@@ -25,43 +26,42 @@ public class Knight extends Piece{
 
         final List<Move> legalMoves = new ArrayList<>();
 
-        for final int currentCandidateOffset : CANDIDATE_MOVES_CORDINATE {
+        for (final int currentCandidateOffset : CANDIDATE_MOVES_CORDINATE) {
           final int candidateDestinationCoordinate = this.piecePosition + currentCandidateOffset;
             if(BoardUtils.isValidCoordinate(candidateDestinationCoordinate)){
                 if (isFirstColumnExclusion(this.piecePosition, currentCandidateOffset)
                         || isSecondColumnExclusion (this.piecePosition, currentCandidateOffset)
                         || isSeventhColumnExclusion (this.piecePosition, currentCandidateOffset)
-                        || isEighthColumnExclusion (this.piecePosition, currentCandidateOffset) {
+                        || isEighthColumnExclusion (this.piecePosition, currentCandidateOffset)) {
                     continue;
                 }
                 final Tile candidateDestinationTile = board.getTile(this.piecePosition);
-                if (candidateDestinationTile.isTileOccupied(){
+                if (candidateDestinationTile.isTileOccupied()){
                     legalMoves.add(new MajorMove (board, this, candidateDestinationCoordinate));
                 } else {
                     final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                     final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
-
-                    if (this.pieceAlliance != pieceAlliance){
-                        legalMoves.add(new Move.AtackMove (board, this, candidateDestinationCoordinate, pieceAtDestination));
-                    }
+                    if (this.pieceAlliance != pieceAlliance)
+                        legalMoves.add (new AtackMove (board, this, candidateDestinationCoordinate, pieceAtDestination));
                 }
             }
         }
-        return Collections.unmodifiableList(legalMoves)﻿;
+        //return unmodifiableList(legalMoves)﻿; Error:(49, 56) java: illegal character: '\ufeff'
+        return null;
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOfSet){
-        return BoardUtils.FIRST_COLUMN(currentPosition) && (candidateOfSet == -17 || candidateOfSet == -10 ||
+        return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOfSet == -17 || candidateOfSet == -10 ||
                 candidateOfSet == 6 || candidateOfSet == 15);
     }
     private static boolean isSecondColumnExclusion(final int currentPosition, final int candidateOfSet){
-        return BoardUtils.SECOND_COLUMN(currentPosition) && (candidateOfSet == -10 || candidateOfSet == 6);
+        return BoardUtils.SECOND_COLUMN[currentPosition] && (candidateOfSet == -10 || candidateOfSet == 6);
     }
     private static boolean isSeventhColumnExclusion(final int currentPosition, final int candidateOfSet){
-        return BoardUtils.SEVENTH_COLUMN(currentPosition) && (candidateOfSet == -6 || candidateOfSet == 10);
+        return BoardUtils.SEVENTH_COLUMN[currentPosition] && (candidateOfSet == -6 || candidateOfSet == 10);
     }
     private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOfSet){
-        return BoardUtils.EIGHTH_COLUMN(currentPosition) && (candidateOfSet == -15 || candidateOfSet == -6 ||
+        return BoardUtils.EIGHTH_COLUMN[currentPosition] && (candidateOfSet == -15 || candidateOfSet == -6 ||
                 candidateOfSet == 10 || candidateOfSet == 17);
     }
 

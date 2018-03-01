@@ -2,7 +2,7 @@ package com.Pr0rider.chess.board;
 
 import com.Pr0rider.chess.pieces.Piece;
 
-private abstract class Move {
+public abstract class Move {
 
     final Board board;
     final Piece movedPiece;
@@ -15,6 +15,7 @@ private abstract class Move {
         this.movedPiece = movedPiece;
         this.destionationCoordinate = destionationCoordinate;
     }
+
     public static class MajorMove extends Move {
 
         public MajorMove(final Board board,
@@ -34,5 +35,6 @@ private abstract class Move {
                          final Piece atackedPiece) {
             super (board, movedPiece, destionationCoordinate);
             this.atackedPiece = atackedPiece;
+        }
     }
 }

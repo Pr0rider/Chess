@@ -6,7 +6,7 @@ import com.Pr0rider.chess.board.Move;
 
 import java.util.Collection;
 
-public class Piece {
+public abstract class Piece {
 
     protected final int piecePosition;
     protected final Alliance pieceAlliance;
