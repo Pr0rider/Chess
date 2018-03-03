@@ -7,11 +7,14 @@ import com.Pr0rider.chess.board.Move;
 import com.Pr0rider.chess.board.Move.MajorMove;
 import com.Pr0rider.chess.board.Move.AtackMove;
 import com.Pr0rider.chess.board.Tile;
+import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.unmodifiableList;
 
 public class Knight extends Piece{
 
@@ -47,7 +50,7 @@ public class Knight extends Piece{
             }
         }
         //return unmodifiableList(legalMoves)﻿; Error:(49, 56) java: illegal character: '\ufeff'
-        return null;
+        return ImmutableList.copyOf (legalMoves);
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOfSet){

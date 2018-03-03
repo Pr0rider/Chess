@@ -22,6 +22,7 @@ public abstract class Tile {
             emptyTileMap.put(i, new EmptyTile(i));
         }
         return Collections.unmodifiableMap(emptyTileMap);
+        //return ImutableMap.copyOf(emptyTileMap);
     }
 
     public static Tile createTile(final int tileCoordinate, final Piece piece){
