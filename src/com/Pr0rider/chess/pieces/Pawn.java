@@ -13,24 +13,32 @@ public class Pawn extends Piece {
 
     private final static int[] CANDIDATE_MOVES_CORDINATE = {7, 8, 9, 16};
 
-    public Pawn(int piecePosition, Alliance pieceAlliance) {
+    public Pawn(final int piecePosition, final Alliance pieceAlliance) {
         super (piecePosition, pieceAlliance);
     }
 
     @Override
-    public Collection<Move> calkulateLegalMoves(Board board) {
+    public Collection<Move> calkulateLegalMoves(final Board board) {
 
         final List<Move> legalMoves = new ArrayList<> ();
 
         for (final int currentCandidateOffset : CANDIDATE_MOVES_CORDINATE) {
-            int candidateDestinationCoordinate = this.piecePosition + (this.getPieceAlliance ().getDirection () * currentCandidateOffset);
+            final int candidateDestinationCoordinate = this.piecePosition + (this.getPieceAlliance ().getDirection () * currentCandidateOffset);
             if (BoardUtils.isValidCoordinate (candidateDestinationCoordinate)) {
                 continue;
             }
             if (currentCandidateOffset == 8 && !board.getTile (candidateDestinationCoordinate).isTileOccupied ()){
+              // todo Promotions
                 legalMoves.add(new Move.MajorMove (board, this, candidateDestinationCoordinate));
+            } else if (currentCandidateOffset == 16 && this.isFirstMove() &&
+                    ((BoardUtils.SECOND_ROW[this.piecePosition] && this.pieceAlliance.isBlack ()) ||
+                    (BoardUtils.SEVENTH_ROW[this.piecePosition] && this.pieceAlliance.isWhite ()))){
+                final int behindCandidateDestinationCoordinate = this.piecePosition + (8 * this.getPieceAlliance ().getDirection ());
+                if (!board.getTile (behindCandidateDestinationCoordinate).isTileOccupied () &&
+                        !board.getTile (candidateDestinationCoordinate).isTileOccupied ()){
+                    legalMoves.add (new Move.MajorMove (board, this, candidateDestinationCoordinate));
+                }
             }
-
             return legalMoves;
         }
     }
